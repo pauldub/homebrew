@@ -298,6 +298,13 @@ begin
     require 'brew_doctor'
     brew_doctor
 
+  when 'fix_install_names'
+    require 'keg'
+    ARGV.kegs.each{ |keg| keg.fix_install_names }
+
+  when 'branch', 'checkout', 'pull', 'push', 'rebase', 'reset'
+    onoe "Unknown command: #{arg} (did you mean 'git #{arg}'?)"
+
   else
     # Add example external commands to PATH before checking.
     ENV['PATH'] += ":#{HOMEBREW_REPOSITORY}/Library/Contributions/examples"
