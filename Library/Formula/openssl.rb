@@ -9,7 +9,8 @@ class Openssl <Formula
   keg_only :provided_by_osx
 
   def install
-    ENV.j1 # Breaks on Mac Pro
+    ENV.universal_binary
+    ENV.j1
     system "./config", "--prefix=#{prefix}",
                        "--openssldir=#{etc}",
                        "zlib-dynamic", "shared"
