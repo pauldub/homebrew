@@ -14,27 +14,24 @@ class Virtualbox <Formula
   depends_on "openssl" # System-provided version is too old.
   depends_on "qt"
 
-  def patches
-    DATA if MACOS_VERSION >= 10.6 and Hardware.is_64_bit?
-  end
+  # def patches
+  #   DATA if MACOS_VERSION >= 10.6 and Hardware.is_64_bit?
+  # end
 
   def install
     openssl_prefix = Formula.factory("openssl").prefix
-    qt_prefix = Formula.factory("qt").prefix
 
     args = ["--disable-hardening",
             "--with-openssl-dir=#{openssl_prefix}",
-            "--with-qt-dir=#{qt_prefix}"]
+            "--with-qt-dir=#{HOMEBREW_PREFIX}"]
 
-    if MACOS_VERSION >= 10.6 and Hardware.is_64_bit?
-      args << "--target-arch=amd64"
-    end
+    args << "--target-arch=amd64" if MACOS_VERSION >= 10.6 and Hardware.is_64_bit?
 
     system "./configure", *args
     system ". ./env.sh ; kmk"
 
     # Move all the build outputs into libexec
-    libexec.install Dir["out/darwin.x86/release/dist/*"]
+    libexec.install Dir["out/darwin.*/release/dist/*"]
 
     app_contents = libexec+"VirtualBox.app/Contents/MacOS/"
 
@@ -54,12 +51,13 @@ class Virtualbox <Formula
   end
 
   def caveats
-    <<-EOS
-    Compiled outputs installed to #{libexec}.
-    You'll have to figure out what to do about the kernel extensions.
+    <<-EOS.undent
+      Compiled outputs installed to:
+        #{libexec}
+      You'll need to figure out what to do about the kernel extensions.
 
-    Pre-compiled binaries are available from:
-      http://www.virtualbox.org/wiki/Downloads
+      Pre-compiled binaries are available from:
+        http://www.virtualbox.org/wiki/Downloads
     EOS
   end
 end
@@ -88,9 +86,9 @@ __END__
 --- VirtualBox-3.2.0_OSE-orig/Config.kmk   2010-05-18 11:10:48.000000000 -0700
 +++ VirtualBox-3.2.0_OSE/Config.kmk   2010-05-23 19:46:49.000000000 -0700
 @@ -2534,6 +2534,14 @@
-TEMPLATE_VBOXR0DRVOSX105_CFLAGS        = $(subst $(VBOX_DARWIN_DEF_SDK_CFLAGS),$(VBOX_DARWIN_DEF_SDK_10_5_CFLAGS),$(TEMPLATE_VBOXR0DRV_CFLAGS))
-TEMPLATE_VBOXR0DRVOSX105_CXXFLAGS      = $(subst $(VBOX_DARWIN_DEF_SDK_CXXFLAGS),$(VBOX_DARWIN_DEF_SDK_10_5_CXXFLAGS),$(TEMPLATE_VBOXR0DRV_CXXFLAGS))
-TEMPLATE_VBOXR0DRVOSX105_LDFLAGS       = $(subst $(VBOX_DARWIN_DEF_SDK_LDFLAGS),$(VBOX_DARWIN_DEF_SDK_10_5_LDFLAGS),$(TEMPLATE_VBOXR0DRV_LDFLAGS))
+ TEMPLATE_VBOXR0DRVOSX105_CFLAGS        = $(subst $(VBOX_DARWIN_DEF_SDK_CFLAGS),$(VBOX_DARWIN_DEF_SDK_10_5_CFLAGS),$(TEMPLATE_VBOXR0DRV_CFLAGS))
+ TEMPLATE_VBOXR0DRVOSX105_CXXFLAGS      = $(subst $(VBOX_DARWIN_DEF_SDK_CXXFLAGS),$(VBOX_DARWIN_DEF_SDK_10_5_CXXFLAGS),$(TEMPLATE_VBOXR0DRV_CXXFLAGS))
+ TEMPLATE_VBOXR0DRVOSX105_LDFLAGS       = $(subst $(VBOX_DARWIN_DEF_SDK_LDFLAGS),$(VBOX_DARWIN_DEF_SDK_10_5_LDFLAGS),$(TEMPLATE_VBOXR0DRV_LDFLAGS))
 +
 +TEMPLATE_VBOXR0DRVOSX106               = Mac OS X 10.6 variant.
 +TEMPLATE_VBOXR0DRVOSX106_EXTENDS       = VBOXR0DRV
@@ -99,13 +97,13 @@ TEMPLATE_VBOXR0DRVOSX105_LDFLAGS       = $(subst $(VBOX_DARWIN_DEF_SDK_LDFLAGS),
 +TEMPLATE_VBOXR0DRVOSX106_CFLAGS        = $(subst $(VBOX_DARWIN_DEF_SDK_CFLAGS),$(VBOX_DARWIN_DEF_SDK_10_6_CFLAGS),$(TEMPLATE_VBOXR0DRV_CFLAGS))
 +TEMPLATE_VBOXR0DRVOSX106_CXXFLAGS      = $(subst $(VBOX_DARWIN_DEF_SDK_CXXFLAGS),$(VBOX_DARWIN_DEF_SDK_10_6_CXXFLAGS),$(TEMPLATE_VBOXR0DRV_CXXFLAGS))
 +TEMPLATE_VBOXR0DRVOSX106_LDFLAGS       = $(subst $(VBOX_DARWIN_DEF_SDK_LDFLAGS),$(VBOX_DARWIN_DEF_SDK_10_6_LDFLAGS),$(TEMPLATE_VBOXR0DRV_LDFLAGS))
-endif
-
-ifeq ($(KBUILD_TARGET),solaris)
+ endif
+ 
+ ifeq ($(KBUILD_TARGET),solaris)
 @@ -2957,6 +2965,21 @@
    -current_version $(VBOX_VERSION_MAJOR).$(VBOX_VERSION_MINOR).$(VBOX_VERSION_BUILD) \
    -compatibility_version $(VBOX_VERSION_MAJOR).$(VBOX_VERSION_MINOR).$(VBOX_VERSION_BUILD)
-
+ 
 +#
 +# Template for building R3 shared objects / DLLs with the 10.6 Mac OS X SDK.
 +# Identical to VBOXR3EXE, except for the DYLIB, the classic_linker and SDK bits.
@@ -121,13 +119,13 @@ ifeq ($(KBUILD_TARGET),solaris)
 +   -read_only_relocs suppress \
 +   -current_version $(VBOX_VERSION_MAJOR).$(VBOX_VERSION_MINOR).$(VBOX_VERSION_BUILD) \
 +   -compatibility_version $(VBOX_VERSION_MAJOR).$(VBOX_VERSION_MINOR).$(VBOX_VERSION_BUILD)
-
-#
-# Ring-3 testcase, running automatically during the build.
+ 
+ #
+ # Ring-3 testcase, running automatically during the build.
 @@ -3716,6 +3739,13 @@
-TEMPLATE_VBOXBLDPROG_OBJCFLAGS.darwin    = $(VBOX_DARWIN_DEF_SDK_10_6_OBJCFLAGS) $(VBOX_GCC_PEDANTIC_C)
-TEMPLATE_VBOXBLDPROG_OBJCXXFLAGS.darwin  = $(VBOX_DARWIN_DEF_SDK_10_6_OBJCXXFLAGS) $(VBOX_GCC_PEDANTIC_CXX)
-TEMPLATE_VBOXBLDPROG_LDFLAGS.darwin      = $(VBOX_DARWIN_DEF_SDK_10_6_LDFLAGS)
+ TEMPLATE_VBOXBLDPROG_OBJCFLAGS.darwin    = $(VBOX_DARWIN_DEF_SDK_10_6_OBJCFLAGS) $(VBOX_GCC_PEDANTIC_C)
+ TEMPLATE_VBOXBLDPROG_OBJCXXFLAGS.darwin  = $(VBOX_DARWIN_DEF_SDK_10_6_OBJCXXFLAGS) $(VBOX_GCC_PEDANTIC_CXX)
+ TEMPLATE_VBOXBLDPROG_LDFLAGS.darwin      = $(VBOX_DARWIN_DEF_SDK_10_6_LDFLAGS)
 +  else ifdef VBOX_MACOS_10_6_WORKAROUND # enable this if you have problems linking xpidl and is running 10.6 or later.
 +TEMPLATE_VBOXBLDPROG_DEFS.darwin         = $(VBOX_DARWIN_DEF_SDK_10_6_DEFS)
 +TEMPLATE_VBOXBLDPROG_CFLAGS.darwin       = $(VBOX_DARWIN_DEF_SDK_10_6_CFLAGS) -fno-common
@@ -135,6 +133,6 @@ TEMPLATE_VBOXBLDPROG_LDFLAGS.darwin      = $(VBOX_DARWIN_DEF_SDK_10_6_LDFLAGS)
 +TEMPLATE_VBOXBLDPROG_OBJCFLAGS.darwin    = $(VBOX_DARWIN_DEF_SDK_10_6_OBJCFLAGS) $(VBOX_GCC_PEDANTIC_C)
 +TEMPLATE_VBOXBLDPROG_OBJCXXFLAGS.darwin  = $(VBOX_DARWIN_DEF_SDK_10_6_OBJCXXFLAGS) $(VBOX_GCC_PEDANTIC_CXX)
 +TEMPLATE_VBOXBLDPROG_LDFLAGS.darwin      = $(VBOX_DARWIN_DEF_SDK_10_6_LDFLAGS)
-   else ifdef VBOX_MACOS_10_5_WORKAROUND # enable this if you have problems linking xpidl and is running 10.5 or later.
-TEMPLATE_VBOXBLDPROG_DEFS.darwin         = $(VBOX_DARWIN_DEF_SDK_10_5_DEFS)
-TEMPLATE_VBOXBLDPROG_CFLAGS.darwin       = $(VBOX_DARWIN_DEF_SDK_10_5_CFLAGS) -fno-common
+    else ifdef VBOX_MACOS_10_5_WORKAROUND # enable this if you have problems linking xpidl and is running 10.5 or later.
+ TEMPLATE_VBOXBLDPROG_DEFS.darwin         = $(VBOX_DARWIN_DEF_SDK_10_5_DEFS)
+ TEMPLATE_VBOXBLDPROG_CFLAGS.darwin       = $(VBOX_DARWIN_DEF_SDK_10_5_CFLAGS) -fno-common
