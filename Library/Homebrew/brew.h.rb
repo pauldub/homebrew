@@ -390,10 +390,13 @@ def macports_or_fink_installed?
   false
 end
 
-def versions_of(keg_name)
-  `/bin/ls #{HOMEBREW_CELLAR}/#{keg_name}`.collect { |version| version.strip }.reverse
+def versions_of keg_name
+  `/bin/ls #{HOMEBREW_CELLAR}/#{keg_name}`.map { |version| version.strip }.reverse
 end
 
+def normalize_version version
+  version.split('.').collect{|s| sprintf('%4s', s)}.join
+end
 
 def outdated_brews
   require 'formula'
@@ -404,11 +407,13 @@ def outdated_brews
     next unless keg.subdirs
 
     # Skip HEAD formulae, consider them "evergreen"
-    next if keg.subdirs.collect{|p|p.basename.to_s}.include? "HEAD"
+    next if keg.subdirs.map{|p|p.basename.to_s}.include? "HEAD"
 
     name = keg.basename.to_s
     if (not (f = Formula.factory(name)).installed? rescue nil)
-      results << [keg, name, f.version]
+      current = normalize_version(f.version)
+      versions = keg.subdirs.map{|p| normalize_version(p.basename.to_s)}
+      results << [keg, name, f.version] if versions.any? {|v| (v <=> current) < 0}
     end
   end
   return results
