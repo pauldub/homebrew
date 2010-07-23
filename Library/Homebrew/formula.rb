@@ -518,7 +518,7 @@ EOF
 
     def depends_on name
       @deps ||= []
-      @external_deps ||= {:python => [], :perl => [], :ruby => [], :jruby => []}
+      @external_deps ||= {:python => [], :perl => [], :ruby => [], :jruby => [], :pkgconfig => []}
 
       case name
       when String, Formula
@@ -528,7 +528,13 @@ EOF
         case value
         when :python, :perl, :ruby, :jruby
           @external_deps[value] << key
-        when :optional, :recommended, :build
+          return
+        when :pkgconfig
+          @external_deps[value] << key
+          # If a package is requested, then pkg-config is an implicit dep
+          @deps << 'pkg-config'
+          return
+        when :optional, :recommended
           @deps << key
         else
           raise "Unsupported dependency type #{value}"

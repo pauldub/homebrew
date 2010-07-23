@@ -50,6 +50,12 @@ class FormulaInstaller
         jruby -S gem install #{dep}
     EOS
   end
+  def pcerr dep; <<-EOS.undent
+    Unsatisfied dependency, #{dep}
+    Homebrew does not provide this dependencies. Nobody does.
+    EOS
+    # TODO: Maybe Homebrew /does/ provide it?
+  end
 
   def check_external_deps f
     return unless f.external_deps
@@ -65,6 +71,9 @@ class FormulaInstaller
     end
     f.external_deps[:jruby].each do |dep|
       raise rberr(dep) unless quiet_system "/usr/bin/env", "jruby", "-rubygems", "-e", "require '#{dep}'"
+    end
+    f.external_deps[:pkgconfig].each do |dep|
+      raise pcerr(dep) unless quiet_system "/usr/bin/env", "pkg-config", dep
     end
   end
 
