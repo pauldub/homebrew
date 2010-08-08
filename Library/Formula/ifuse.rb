@@ -8,6 +8,7 @@ class Ifuse <Formula
   depends_on 'pkg-config' => :build
   depends_on 'glib'
   depends_on 'libimobiledevice'
+  depends_on 'fuse' => :pkgconfig
 
   def install
     system "./configure", "--disable-dependency-tracking", "--prefix=#{prefix}"
