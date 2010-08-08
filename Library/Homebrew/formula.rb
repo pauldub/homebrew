@@ -524,18 +524,18 @@ EOF
       when String, Formula
         @deps << name
       when Hash
-        key, value = name.shift
-        case value
+        dep_name, dep_type = name.shift
+        case dep_type
         when :python, :perl, :ruby, :jruby
-          @external_deps[value] << key
+          @external_deps[dep_type] << dep_name
           return
         when :pkgconfig
-          @external_deps[value] << key
           # If a package is requested, then pkg-config is an implicit dep
           @deps << 'pkg-config'
+          @external_deps[dep_type] << dep_name
           return
         when :optional, :recommended
-          @deps << key
+          @deps << dep_name
         else
           raise "Unsupported dependency type #{value}"
         end
