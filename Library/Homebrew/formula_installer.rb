@@ -50,11 +50,12 @@ class FormulaInstaller
         jruby -S gem install #{dep}
     EOS
   end
-  def pcerr dep; <<-EOS.undent
-    Unsatisfied dependency, #{dep}
-    Homebrew does not provide this dependencies. Nobody does.
+  def pkgerr dep; <<-EOS.undent
+    Unsatisfied pkg-cofnig dependency \""#{dep}\""
+    Homebrew does not provide this dependency, but if you have
+    the requested software installed another way, this formula
+    may still work.
     EOS
-    # TODO: Maybe Homebrew /does/ provide it?
   end
 
   def check_external_deps f
@@ -73,7 +74,7 @@ class FormulaInstaller
       raise rberr(dep) unless quiet_system "/usr/bin/env", "jruby", "-rubygems", "-e", "require '#{dep}'"
     end
     f.external_deps[:pkgconfig].each do |dep|
-      raise pcerr(dep) unless quiet_system "/usr/bin/env", "pkg-config", dep
+      opoo pcerr(dep) unless quiet_system "#{HOMEBREW_PREFIX}/bin/pkg-config", dep
     end
   end
 
