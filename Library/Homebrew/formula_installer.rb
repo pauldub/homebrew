@@ -51,7 +51,7 @@ class FormulaInstaller
     EOS
   end
   def pkgerr dep; <<-EOS.undent
-    Unsatisfied pkg-cofnig dependency "#{dep}"
+    Unsatisfied pkg-config dependency "#{dep}"
     Homebrew does not provide this dependency, but if you have
     the requested software installed another way, this formula
     may still work.
