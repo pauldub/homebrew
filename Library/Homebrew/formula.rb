@@ -98,7 +98,7 @@ class Formula
 
   # if the dir is there, but it's empty we consider it not installed
   def installed?
-    return prefix.children.length > 0
+    return prefix.parent.subdirs.first.children.length > 0
   rescue
     return false
   end
