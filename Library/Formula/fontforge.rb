@@ -11,14 +11,21 @@ class Fontforge <Formula
   depends_on 'potrace'
 
   def install
+
+    # python module fails with -march=core2 and -msse4.1
+    ENV.minimal_optimization
+
     system "./configure", "--prefix=#{prefix}",
                           "--enable-double",
                           "--without-freetype-bytecode",
-                          "--without-python"
+                          "--with-python",
+                          "--enable-pyextension"
 
     inreplace "Makefile" do |s|
       s.gsub! "/Applications", "$(prefix)"
       s.gsub! "/usr/local/bin", "$(bindir)"
+      # python setup.py does the wrong thing with --root=$(DESTDIR)
+      s.gsub! 'python setup.py install --prefix=$(prefix) --root=$(DESTDIR)', 'python setup.py install --prefix=$(prefix)'
     end
 
     system "make"
