@@ -25,7 +25,7 @@ class Virtualbox <Formula
             "--with-openssl-dir=#{openssl_prefix}",
             "--with-qt-dir=#{HOMEBREW_PREFIX}"]
 
-    args << "--target-arch=amd64" if MACOS_VERSION >= 10.6 and Hardware.is_64_bit?
+    args << "--target-arch=amd64" if snow_leopard_64?
 
     system "./configure", *args
     system ". ./env.sh ; kmk"
@@ -37,8 +37,7 @@ class Virtualbox <Formula
 
     # remove test scripts and files
     (app_contents+"testcase").rmtree
-    FileUtils.rm Dir.glob(app_contents+"tst*")
-
+    rm Dir.glob(app_contents+"tst*")
 
     # Slot the command-line tools into bin
     bin.mkpath
