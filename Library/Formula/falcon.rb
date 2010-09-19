@@ -18,7 +18,7 @@ class Falcon <Formula
   homepage 'http://www.falconpl.org/'
   md5 '35475a49f8dcc9ccf1c89f54de156951'
 
-  depends_on 'cmake'
+  depends_on 'cmake' => :build
   depends_on 'pcre'
 
   def install
