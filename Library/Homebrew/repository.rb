@@ -20,6 +20,12 @@ class Repository
   def names
     Dir["#{@path}/Formula/*.rb"].map{ |f| File.basename f, '.rb' }.sort
   end
+
+  # an array of all alias names in this repo
+  # todo - need to hang on to the repo reference as well
+  def aliases
+    Dir["#{@path}/Aliases/*"].map{ |f| File.basename f }.sort
+  end
 end
 
 DEFAULT_REPOSITORY = Repository.new(HOMEBREW_REPOSITORY+'Library')
