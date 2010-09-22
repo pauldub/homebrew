@@ -277,6 +277,7 @@ class Formula
     return all
   end
 
+  # an array of all alias names
   def self.aliases
     Dir["#{HOMEBREW_REPOSITORY}/Library/Aliases/*"].map{ |f| File.basename f }.sort
   end
