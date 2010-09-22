@@ -12,7 +12,7 @@ class Repository
   def initialize path
     @path = Pathname.new(path)
   end
-  
+
   # an array of all Formula names in this repo
   # todo - need to hang on to the repo reference as well
   def names
