@@ -285,6 +285,10 @@ class Formula
     else
       name
     end
+
+  # todo - find in any repository
+  def self.path name
+    DEFAULT_REPOSITORY.formula_path name
   end
 
   def self.factory name
@@ -334,10 +338,6 @@ class Formula
     return klass.new(name, target_file)
   rescue LoadError
     raise FormulaUnavailableError.new(name)
-  end
-
-  def self.path name
-    HOMEBREW_REPOSITORY+"Library/Formula/#{name.downcase}.rb"
   end
 
   def deps
