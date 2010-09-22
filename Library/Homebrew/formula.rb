@@ -326,7 +326,7 @@ class Formula
         install_type = :from_path
       else
         # For names, map to the path and then require
-        require self.path(name)
+        require DEFAULT_REPOSITORY.formula_path(name)
         install_type = :from_name
       end
     end
