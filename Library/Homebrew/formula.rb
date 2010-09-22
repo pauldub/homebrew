@@ -1,3 +1,4 @@
+require 'repository'
 require 'download_strategy'
 require 'fileutils'
 
@@ -261,25 +262,17 @@ class Formula
 
   # an array of all Formula names
   def self.names
-    Dir["#{HOMEBREW_REPOSITORY}/Library/Formula/*.rb"].map{ |f| File.basename f, '.rb' }.sort
+    DEFAULT_REPOSITORY.names
   end
 
   # an array of all Formula, instantiated
   def self.all
-    all = []
-    names.each do |n|
-      begin
-        all << Formula.factory(n)
-      rescue
-        # Don't let one broken formula break commands.
-      end
-    end
-    return all
+    DEFAULT_REPOSITORY.all
   end
 
   # an array of all alias names
   def self.aliases
-    Dir["#{HOMEBREW_REPOSITORY}/Library/Aliases/*"].map{ |f| File.basename f }.sort
+    DEFAULT_REPOSITORY.aliases
   end
 
   def self.resolve_alias name

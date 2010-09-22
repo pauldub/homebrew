@@ -33,6 +33,20 @@ class Repository
     Dir["#{alias_location}/*"].map{ |f| File.basename f }.sort
   end
 
+  # an array of all Formula, instantiated
+  def all
+    require formula
+    all = []
+    names.each do |n|
+      begin
+        all << Formula.factory(n)
+      rescue
+        # Don't let one broken formula break commands.
+      end
+    end
+    return all
+  end
+
   # Bad name for this method
   def formula_path name
     formula_location+"#{name.downcase}.rb"
