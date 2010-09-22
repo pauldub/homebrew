@@ -14,6 +14,12 @@ class Repository
   def initialize path
     @path = Pathname.new(path)
   end
+  
+  # an array of all Formula names in this repo
+  # todo - need to hang on to the repo reference as well
+  def names
+    Dir["#{@path}/Formula/*.rb"].map{ |f| File.basename f, '.rb' }.sort
+  end
 end
 
 DEFAULT_REPOSITORY = Repository.new(HOMEBREW_REPOSITORY+'Library')
