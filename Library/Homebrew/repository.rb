@@ -5,8 +5,6 @@
 # A "repository" or "repo" is just a folder with Alias and Formula
 # subfolders.
 
-require 'extend/pathname'
-
 
 class Repository
   attr_reader :path
