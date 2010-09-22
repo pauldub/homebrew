@@ -193,6 +193,14 @@ class Formula
     self.class.skip_clean_paths.include? to_check
   end
 
+  def deps
+    self.class.deps or []
+  end
+
+  def external_deps
+    self.class.external_deps
+  end
+
   # yields self with current working directory set to the uncompressed tarball
   def brew
     validate_variable :name
@@ -338,14 +346,6 @@ class Formula
     return klass.new(name, target_file)
   rescue LoadError
     raise FormulaUnavailableError.new(name)
-  end
-
-  def deps
-    self.class.deps or []
-  end
-
-  def external_deps
-    self.class.external_deps
   end
 
 protected
