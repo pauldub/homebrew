@@ -530,8 +530,8 @@ EOF
     raise 'You cannot override Formula.brew' if method == 'brew'
   end
 
+  # The methods below define the formula DSL.
   class << self
-    # The methods below define the formula DSL.
     attr_reader :stable, :unstable
 
     def self.attr_rw(*attrs)
