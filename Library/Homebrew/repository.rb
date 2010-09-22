@@ -13,16 +13,29 @@ class Repository
     @path = Pathname.new(path)
   end
 
+  def alias_location
+    path+"Aliases"
+  end
+
+  def formula_location
+    path+"Formula"
+  end
+
   # an array of all Formula names in this repo
   # todo - need to hang on to the repo reference as well
   def names
-    Dir["#{@path}/Formula/*.rb"].map{ |f| File.basename f, '.rb' }.sort
+    Dir["#{formula_location}/*.rb"].map{ |f| File.basename f, '.rb' }.sort
   end
 
   # an array of all alias names in this repo
   # todo - need to hang on to the repo reference as well
   def aliases
-    Dir["#{@path}/Aliases/*"].map{ |f| File.basename f }.sort
+    Dir["#{alias_location}/*"].map{ |f| File.basename f }.sort
+  end
+
+  # Bad name for this method
+  def formula_path name
+    formula_location+"#{name.downcase}.rb"
   end
 end
 
