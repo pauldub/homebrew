@@ -13,7 +13,7 @@ class Fontforge <Formula
   def install
 
     # python module fails with -march=core2 and -msse4.1
-    ENV.minimal_optimization
+    # ENV.minimal_optimization
 
     system "./configure", "--prefix=#{prefix}",
                           "--enable-double",
@@ -24,7 +24,10 @@ class Fontforge <Formula
     inreplace "Makefile" do |s|
       s.gsub! "/Applications", "$(prefix)"
       s.gsub! "/usr/local/bin", "$(bindir)"
-      # python setup.py does the wrong thing with --root=$(DESTDIR)
+
+      # setup.py does the wrong thing with --root=$(DESTDIR)
+      # We want everything to live under our prefix, so we remove the "-root"
+      # to force everything under the prefix.
       s.gsub! 'python setup.py install --prefix=$(prefix) --root=$(DESTDIR)', 'python setup.py install --prefix=$(prefix)'
     end
 
