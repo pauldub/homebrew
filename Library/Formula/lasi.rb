@@ -5,7 +5,7 @@ class Lasi <Formula
   homepage 'http://www.unifont.org/lasi/'
 
   depends_on 'cmake' => :build
-  depends_on 'pkg-config'
+  depends_on 'pkg-config' => :build
   depends_on 'pango'
   depends_on 'doxygen'
 

@@ -6,7 +6,7 @@ class Openimageio <Formula
   homepage 'http://openimageio.org'
 
   depends_on 'cmake' => :build
-  depends_on 'pkg-config'
+  depends_on 'pkg-config' => :build
   depends_on 'ilmbase'
   depends_on 'openexr'
   depends_on 'boost'

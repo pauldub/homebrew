@@ -11,7 +11,7 @@ class Opencv <Formula
   head 'https://code.ros.org/svn/opencv/trunk/opencv', :using => :svn
 
   depends_on 'cmake' => :build
-  depends_on 'pkg-config'
+  depends_on 'pkg-config' => :build
 
   depends_on 'libtiff' => :optional
   depends_on 'jasper'  => :optional
