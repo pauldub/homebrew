@@ -20,10 +20,11 @@ class Virtualbox <Formula
 
   def install
     openssl_prefix = Formula.factory("openssl").prefix
+    qt_prefix = Formula.factory("qt").prefix
 
     args = ["--disable-hardening",
             "--with-openssl-dir=#{openssl_prefix}",
-            "--with-qt-dir=#{HOMEBREW_PREFIX}"]
+            "--with-qt-dir=#{qt_prefix}"]
 
     args << "--target-arch=amd64" if snow_leopard_64?
 
