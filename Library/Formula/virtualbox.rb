@@ -5,10 +5,10 @@ require 'formula'
 # * http://forums.virtualbox.org/viewtopic.php?f=10&t=28561
 
 class Virtualbox <Formula
-  url 'http://download.virtualbox.org/virtualbox/3.2.6/VirtualBox-3.2.6-OSE.tar.bz2'
-  version '3.2.6-OSE'
+  url 'http://download.virtualbox.org/virtualbox/3.2.8/VirtualBox-3.2.8-OSE.tar.bz2'
+  version '3.2.8-OSE'
   homepage 'http://www.virtualbox.org/'
-  md5 '65b822ab3c08ff882d9621101996dc14'
+  md5 '84de65bddb365ba61eddd3b112b303e5'
 
   depends_on "libidl"
   depends_on "openssl" # System-provided version is too old.
