@@ -76,12 +76,9 @@ begin
     ENV.setup_build_environment
     dump_build_env ENV
 
-    when 'home', 'homepage'
-      if ARGV.named.empty?
-        exec "open", HOMEBREW_WWW
-      else
-        exec "open", *ARGV.formulae.collect {|f| f.homepage}
-      end
+  when 'home', 'homepage'
+    require 'commands/home'
+    brew_home
 
   when 'ls', 'list'
     require 'commands/list'
