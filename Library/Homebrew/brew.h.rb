@@ -358,11 +358,6 @@ def macports_or_fink_installed?
   false
 end
 
-def versions_of(keg_name)
-  `/bin/ls #{HOMEBREW_CELLAR}/#{keg_name}`.collect { |version| version.strip }.reverse
-end
-
-
 def outdated_brews
   require 'formula'
 
