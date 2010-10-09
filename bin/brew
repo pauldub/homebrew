@@ -320,7 +320,7 @@ begin
     end
 
   when 'doctor', 'dr'
-    require 'brew_doctor'
+    require 'commands/doctor'
     brew_doctor
 
   when 'audit'
