@@ -83,14 +83,17 @@ begin
     else
       puts ARGV.formulae.collect {|f| f.cached_download}
     end
+
   when '--prefix'
     if ARGV.named.empty?
       puts HOMEBREW_PREFIX
     else
       puts ARGV.formulae.collect {|f| f.prefix}
     end
+
   when '--repository'
     puts HOMEBREW_REPOSITORY
+
   when '--cellar'
     if ARGV.named.empty?
       puts HOMEBREW_CELLAR
