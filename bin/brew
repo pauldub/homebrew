@@ -217,8 +217,9 @@ begin
         end
       end
 
-    when 'prune'
-      prune
+  when 'prune'
+    require 'commands/prune'
+    brew_prune
 
     when 'create'
       if ARGV.include? '--macports'
