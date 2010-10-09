@@ -18,9 +18,9 @@ def audit
   paths=%w[bin].collect {|d| HOMEBREW_PREFIX+d}
 
   paths.each do |path|
-    path.find do |path|
-      next unless path.symlink? && path.resolved_path_exists?
-      brew_links << Pathname.new(path.realpath)
+    path.find do |p|
+      next unless p.symlink? && p.resolved_path_exists?
+      brew_links << Pathname.new(p.realpath)
     end
   end
 
