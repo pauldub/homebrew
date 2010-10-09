@@ -129,7 +129,7 @@ begin
     brew_cleanup
 
   when 'install'
-    check_for_blacklisted_formula(ARGV.named)
+    require 'commands/install'
     brew_install
 
   when 'log'
