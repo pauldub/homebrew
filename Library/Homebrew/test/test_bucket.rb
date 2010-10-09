@@ -78,19 +78,6 @@ class BeerTasting < Test::Unit::TestCase
   #   assert_equal 1, n
   # end
   
-  def test_brew_h
-    nostdout do
-      assert_nothing_raised do
-        f=TestBall.new
-        make f.url
-        info f
-        clean f
-        prune
-        #TODO test diy function too
-      end
-    end
-  end
-
   def test_brew_cleanup
     f1=TestBall.new
     f1.instance_eval { @version = "0.1" }
