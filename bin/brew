@@ -110,6 +110,7 @@ begin
     require 'commands/prune'
     brew_prune
 
+<<<<<<< HEAD
     when 'create'
       if ARGV.include? '--macports'
         exec "open", "http://www.macports.org/ports.php?by=name&substr=#{ARGV.next}"
@@ -120,6 +121,11 @@ begin
       else
         exec_editor(*ARGV.named.collect {|name| make name})
       end
+=======
+  when 'create'
+    require 'commands/create'
+    brew_create
+>>>>>>> Move create to commands
 
     when 'diy', 'configure'
       puts diy
