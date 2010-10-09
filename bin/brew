@@ -127,8 +127,9 @@ begin
     brew_create
 >>>>>>> Move create to commands
 
-    when 'diy', 'configure'
-      puts diy
+  when 'diy', 'configure'
+    require 'commands/diy'
+    brew_diy
 
     when 'info', 'abv'
       if ARGV.named.empty?
