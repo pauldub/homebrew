@@ -79,6 +79,8 @@ class BeerTasting < Test::Unit::TestCase
   # end
   
   def test_brew_cleanup
+    require 'commands/cleanup'
+
     f1=TestBall.new
     f1.instance_eval { @version = "0.1" }
     f2=TestBall.new
