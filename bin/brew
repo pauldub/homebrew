@@ -320,6 +320,10 @@ begin
       end
     end
 
+  when 'fetch'
+    require 'commands/fetch'
+    brew_fetch
+
   when 'doctor', 'dr'
     require 'commands/doctor'
     brew_doctor
