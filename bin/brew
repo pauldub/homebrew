@@ -323,6 +323,10 @@ begin
     require 'brew_doctor'
     brew_doctor
 
+  when 'audit'
+    require 'commands/audit'
+    brew_audit
+
   else
     # Add example external commands to PATH before checking.
     ENV['PATH'] += ":#{HOMEBREW_REPOSITORY}/Library/Contributions/examples"
