@@ -464,3 +464,38 @@ def _compiler_recommendation build, recommended
   message = (!build.nil? && build < recommended) ? "(#{recommended} or newer recommended)" : ""
   return build, message
 end
+
+def dump_config
+  require 'hardware'
+  sha = `cd #{HOMEBREW_REPOSITORY} && git rev-parse --verify HEAD 2> /dev/null`.chomp
+  sha = "(none)" if sha.empty?
+  bits = Hardware.bits
+  cores = Hardware.cores_as_words
+  kernel_arch = `uname -m`.chomp
+  system_ruby = Pathname.new("/usr/bin/ruby")
+
+  llvm,   llvm_msg   = _compiler_recommendation llvm_build,   RECOMMENDED_LLVM
+  gcc_42, gcc_42_msg = _compiler_recommendation gcc_42_build, RECOMMENDED_GCC_42
+  gcc_40, gcc_40_msg = _compiler_recommendation gcc_40_build, RECOMMENDED_GCC_40
+  xcode = xcode_version || "?"
+
+  puts <<-EOS
+HOMEBREW_VERSION: #{HOMEBREW_VERSION}
+HEAD: #{sha}
+HOMEBREW_PREFIX: #{HOMEBREW_PREFIX}
+HOMEBREW_CELLAR: #{HOMEBREW_CELLAR}
+HOMEBREW_REPOSITORY: #{HOMEBREW_REPOSITORY}
+HOMEBREW_LIBRARY_PATH: #{HOMEBREW_LIBRARY_PATH}
+Hardware: #{cores}-core #{bits}-bit #{Hardware.intel_family}
+OS X: #{MACOS_FULL_VERSION}
+Kernel Architecture: #{kernel_arch}
+Ruby: #{RUBY_VERSION}-#{RUBY_PATCHLEVEL}
+/usr/bin/ruby => #{system_ruby.realpath}
+Xcode: #{xcode}
+GCC-4.0: #{gcc_40 ? "build #{gcc_40}" : "N/A"} #{gcc_42_msg}
+GCC-4.2: #{gcc_42 ? "build #{gcc_42}" : "N/A"} #{gcc_40_msg}
+LLVM: #{llvm ? "build #{llvm}" : "N/A" } #{llvm_msg}
+MacPorts or Fink? #{macports_or_fink_installed?}
+X11 installed? #{x11_installed?}
+EOS
+end
