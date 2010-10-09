@@ -96,11 +96,11 @@ begin
     require 'commands/update'
     brew_update
 
-    when 'ln', 'link'
-      ARGV.kegs.each {|keg| puts "#{keg.link} links created for #{keg}"}
+  when 'ln', 'link'
+    ARGV.kegs.each {|keg| puts "#{keg.link} links created for #{keg}"}
 
-    when 'unlink'
-      ARGV.kegs.each {|keg| puts "#{keg.unlink} links removed for #{keg}"}
+  when 'unlink'
+    ARGV.kegs.each {|keg| puts "#{keg.unlink} links removed for #{keg}"}
 
   when 'remove', 'rm', 'uninstall'
     require 'commands/remove'
