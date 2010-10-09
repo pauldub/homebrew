@@ -209,7 +209,7 @@ def audit_formula_instance f
   return problems
 end
 
-def audit_some_formulae
+def brew_audit
   ff.each do |f|
     problems = []
 
@@ -237,5 +237,3 @@ def audit_some_formulae
     end
   end
 end
-
-audit_some_formulae
