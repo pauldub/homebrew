@@ -47,46 +47,6 @@ def github_info name
   return "http://github.com/#{user}/homebrew/commits/#{branch}/Library/Formula/#{formula_name}"
 end
 
-def info f
-  exec 'open', github_info(f.name) if ARGV.flag? '--github'
-
-  puts "#{f.name} #{f.version}"
-  puts f.homepage
-
-  puts "Depends on: #{f.deps.join(', ')}" unless f.deps.empty?
-
-  if f.prefix.parent.directory?
-    kids=f.prefix.parent.children
-    kids.each do |keg|
-      next if keg.basename.to_s == '.DS_Store'
-      print "#{keg} (#{keg.abv})"
-      print " *" if f.installed_prefix == keg and kids.length > 1
-      puts
-    end
-  else
-    puts "Not installed"
-  end
-
-  if f.caveats
-    puts
-    puts f.caveats
-    puts
-  end
-
-  history = github_info(f.name)
-  puts history if history
-
-rescue FormulaUnavailableError
-  # check for DIY installation
-  d=HOMEBREW_PREFIX+name
-  if d.directory?
-    ohai "DIY Installation"
-    d.children.each {|keg| puts "#{keg} (#{keg.abv})"}
-  else
-    raise "No such formula or keg"
-  end
-end
-
 def issues_for_formula name
   # bit basic as depends on the issue at github having the exact name of the
   # formula in it. Which for stuff like objective-caml is unlikely. So we
