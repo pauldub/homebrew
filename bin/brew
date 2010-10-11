@@ -143,8 +143,8 @@ begin
     brew_deps
 
   when 'cat'
-    Dir.chdir HOMEBREW_REPOSITORY
-    exec "cat", ARGV.formulae.first.path, *ARGV.options_only
+    require 'commands/cat'
+    brew_cat
 
   when 'outdated'
     require 'commands/outdated'
