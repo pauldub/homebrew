@@ -70,28 +70,6 @@ rescue
   []
 end
 
-def clean f
-  require 'cleaner'
-  Cleaner.new f
- 
-  # Hunt for empty folders and nuke them unless they are
-  # protected by f.skip_clean?
-  # We want post-order traversal, so put the dirs in a stack
-  # and then pop them off later.
-  paths = []
-  f.prefix.find do |path|
-    paths << path if path.directory?
-  end
-
-  until paths.empty? do
-    d = paths.pop
-    if d.children.empty? and not f.skip_clean? d
-      puts "rmdir: #{d} (empty)" if ARGV.verbose?
-      d.rmdir
-    end
-  end
-end
-
 def macports_or_fink_installed?
   # See these issues for some history:
   # http://github.com/mxcl/homebrew/issues/#issue/13
