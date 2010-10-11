@@ -20,6 +20,28 @@ command to link it into the Homebrew prefix:
   EOS
 end
 
+def clean f
+  require 'cleaner'
+  Cleaner.new f
+
+  # Hunt for empty folders and nuke them unless they are
+  # protected by f.skip_clean?
+  # We want post-order traversal, so put the dirs in a stack
+  # and then pop them off later.
+  paths = []
+  f.prefix.find do |path|
+    paths << path if path.directory?
+  end
+
+  until paths.empty? do
+    d = paths.pop
+    if d.children.empty? and not f.skip_clean? d
+      puts "rmdir: #{d} (empty)" if ARGV.verbose?
+      d.rmdir
+    end
+  end
+end
+
 # I like this little at all, but see no alternative seeing as the formula
 # rb file has to be the running script to allow it to use __END__ and DATA
 at_exit do
