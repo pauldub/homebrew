@@ -1,27 +1,35 @@
 require 'formula'
 
-# EasyTAG is a utility for viewing and editing tags for MP3, MP2, MP4/AAC, FLAC, Ogg Vorbis, MusePack, Monkey's Audio and WavPack files.
-class Easytag <Formula
+# EasyTAG is a utility for viewing and editing tags for MP3, MP2, MP4/AAC,
+# FLAC, Ogg Vorbis, MusePack, Monkey's Audio and WavPack files.
+class EasyTag <Formula
   url 'http://archive.ubuntu.com/ubuntu/pool/universe/e/easytag/easytag_2.1.6.orig.tar.gz'
   homepage 'http://easytag.sf.net'
   md5 '91b57699ac30c1764af33cc389a64c71'
 
+  depends_on 'pkg-config' => :build
   depends_on 'glib'
   depends_on 'gtk+'
   depends_on 'id3lib'
   depends_on 'libid3tag'
   depends_on 'mp4v2'
-  
-  def patches
-    DATA
-  end
+
+  def patches; DATA; end
 
   def install
     system "./configure", "--disable-debug", "--disable-dependency-tracking",
                           "--prefix=#{prefix}"
+    system "make"
+    ENV.j1 # Parallel install can fail with "File exists"
     system "make install"
+
+    # Don't need Gnome support
+    rm_rf (share+"pixmaps")
+    rm_rf (share+"applications")
   end
 end
+
+
 __END__
 --- a/configure
 +++ b/configure
