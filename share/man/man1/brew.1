@@ -194,6 +194,13 @@ If \fB\-\-HEAD\fR is passed, download the HEAD version of \fIformula\fR instead\
 If \fB\-\-force\fR is passed, remove a previously cached version and re\-fetch\.
 .
 .TP
+\fBaudit [\-\-warn]\fR
+Checks all formulae for Homebrew coding style violations\. This should be run before submitting a new formula for inclusion\.
+.
+.IP
+If \fB\-\-warn\fR is passed, performs additional stricter checks that may not need to be fixed before submitting\.
+.
+.TP
 \fBtest\fR \fIformula\fR
 A few formulae provide a test method\. \fBbrew test <formula>\fR runs this test method\. There is no standard output or return code, but it should generally indicate to the user if something is wrong with the installed formula\.
 .
@@ -205,13 +212,6 @@ Homebrew allows external commands to be defined by putting a +x file named \fBbr
 .
 .P
 Some external commands are shipped with Homebrew, and enabled by default\.
-.
-.TP
-\fBaudit [\-\-warn]\fR
-Checks all formulae for Homebrew coding style violations\. This should be run before submitting a new formula for inclusion\.
-.
-.IP
-If \fB\-\-warn\fR is passed, performs additional stricter checks that may not need to be fixed before submitting\.
 .
 .TP
 \fBoptions\fR \fIformula\fR

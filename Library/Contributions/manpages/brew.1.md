@@ -183,6 +183,13 @@ didn't include with OS X.
 
     If `--force` is passed, remove a previously cached version and re-fetch.
 
+  * `audit [--warn]`:
+    Checks all formulae for Homebrew coding style violations. This should be
+    run before submitting a new formula for inclusion.
+
+    If `--warn` is passed, performs additional stricter checks that may not need
+    to be fixed before submitting.
+
   * `test` <formula>:
     A few formulae provide a test method. `brew test <formula>` runs this
     test method. There is no standard output or return code, but it should
@@ -198,13 +205,6 @@ Homebrew allows external commands to be defined by putting a +x file named
 to recognize `brew cmdname`.
 
 Some external commands are shipped with Homebrew, and enabled by default.
-
-  * `audit [--warn]`:
-    Checks all formulae for Homebrew coding style violations. This should be
-    run before submitting a new formula for inclusion.
-
-    If `--warn` is passed, performs additional stricter checks that may not need
-    to be fixed before submitting.
 
   * `options` <formula>:
     Displays install options specific to <formula>.
