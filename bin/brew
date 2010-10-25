@@ -97,7 +97,8 @@ begin
     brew_update
 
   when 'ln', 'link'
-    ARGV.kegs.each {|keg| puts "#{keg.link} links created for #{keg}"}
+    require 'commands/link'
+    brew_link
 
   when 'unlink'
     ARGV.kegs.each {|keg| puts "#{keg.unlink} links removed for #{keg}"}
