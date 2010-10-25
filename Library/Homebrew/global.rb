@@ -2,6 +2,7 @@ require 'extend/pathname'
 require 'extend/ARGV'
 require 'extend/string'
 require 'cellar'
+require 'prefix'
 require 'utils'
 
 ARGV.extend(HomebrewArgvExtension)
@@ -21,7 +22,7 @@ if not defined? HOMEBREW_BREW_FILE
   HOMEBREW_BREW_FILE = ENV['HOMEBREW_BREW_FILE'] || `which brew`.chomp
 end
 
-HOMEBREW_PREFIX = Pathname.new(HOMEBREW_BREW_FILE).dirname.parent # Where we link under
+HOMEBREW_PREFIX = HomebrewPrefix.new(Pathname.new(HOMEBREW_BREW_FILE).dirname.parent) # Where we link under
 HOMEBREW_REPOSITORY = Pathname.new(HOMEBREW_BREW_FILE).realpath.dirname.parent # Where .git is found
 
 # Where we store built products; /usr/local/Cellar if it exists,
