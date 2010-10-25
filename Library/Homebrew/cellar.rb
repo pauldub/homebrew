@@ -3,6 +3,10 @@ class Cellar <Pathname
     super path
   end
 
+  def racks
+    self.children.select { |pn| pn.directory? }
+  end
+
   def outdated_brews
     require 'formula'
 

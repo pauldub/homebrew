@@ -70,7 +70,7 @@ end
 
 def brew_list_versions
   if ARGV.named.empty?
-    to_list = HOMEBREW_CELLAR.children.select { |pn| pn.directory? }
+    to_list = HOMEBREW_CELLAR.racks
   else
     to_list = ARGV.named.collect { |n| HOMEBREW_CELLAR+n }.select { |pn| pn.exist? }
   end
