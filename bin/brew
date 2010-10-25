@@ -164,6 +164,10 @@ begin
     require 'commands/audit'
     brew_audit
 
+  when 'test'
+    require 'commands/test'
+    brew_test
+
   else
     # Add example external commands to PATH before checking.
     ENV['PATH'] += ":#{HOMEBREW_REPOSITORY}/Library/Contributions/examples"

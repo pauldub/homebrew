@@ -193,6 +193,13 @@ If \fB\-\-HEAD\fR is passed, download the HEAD version of \fIformula\fR instead\
 .IP
 If \fB\-\-force\fR is passed, remove a previously cached version and re\-fetch\.
 .
+.TP
+\fBtest\fR \fIformula\fR
+A few formulae provide a test method\. \fBbrew test <formula>\fR runs this test method\. There is no standard output or return code, but it should generally indicate to the user if something is wrong with the installed formula\.
+.
+.IP
+Example: \fBbrew install jruby && brew test jruby\fR
+.
 .SH "EXTERNAL COMMANDS"
 Homebrew allows external commands to be defined by putting a +x file named \fBbrew\-<cmdname>\fR or \fBbrew\-<cmdname>\.rb\fR on the PATH\. This will cause Homebrew to recognize \fBbrew cmdname\fR\.
 .
@@ -227,13 +234,6 @@ Starts a local webserver with an app that lets you browse available formulae, si
 .
 .IP
 \fINOTE\fR: Requires \fBsinatra\fR \fIhttp://www\.sinatrarb\.com/\fR\.
-.
-.TP
-\fBtest\fR \fIformula\fR
-A few formulae provide a test method\. \fBbrew test <formula>\fR runs this test method\. There is no standard output or return code, but it should generally indicate to the user if something is wrong with the installed formula\.
-.
-.IP
-Example: \fBbrew install jruby && brew test jruby\fR
 .
 .SH "ENVIRONMENT"
 .

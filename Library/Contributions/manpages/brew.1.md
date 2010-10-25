@@ -183,6 +183,14 @@ didn't include with OS X.
 
     If `--force` is passed, remove a previously cached version and re-fetch.
 
+  * `test` <formula>:
+    A few formulae provide a test method. `brew test <formula>` runs this
+    test method. There is no standard output or return code, but it should
+    generally indicate to the user if something is wrong with the installed
+    formula.
+
+    Example: `brew install jruby && brew test jruby`
+
 ## EXTERNAL COMMANDS
 
 Homebrew allows external commands to be defined by putting a +x file named
@@ -214,14 +222,6 @@ Some external commands are shipped with Homebrew, and enabled by default.
     formulae, similar to `gem server`.
 
     *NOTE*: Requires [`sinatra`][sinatra].
-
-  * `test` <formula>:
-    A few formulae provide a test method. `brew test <formula>` runs this
-    test method. There is no standard output or return code, but it should
-    generally indicate to the user if something is wrong with the installed
-    formula.
-
-    Example: `brew install jruby && brew test jruby`
 
 [ronn]: http://rtomayko.github.com/ronn/
         "Ronn"
