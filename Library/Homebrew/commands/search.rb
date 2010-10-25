@@ -1,3 +1,5 @@
+require 'blacklist'
+
 def brew_search
   if ARGV.include? '--macports'
     exec "open", "http://www.macports.org/ports.php?by=name&substr=#{ARGV.next}"
