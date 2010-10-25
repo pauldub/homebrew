@@ -20,4 +20,10 @@ class HomebrewPrefix <Pathname
 
     dirs.sort.reverse_each {|d| d.rmdir_if_possible}
   end
+
+  def unbrewed_dirs
+    dirs = self.children.select { |pn| pn.directory? }.collect { |pn| pn.basename.to_s }
+    dirs -= ['Library', 'Cellar', '.git']
+    return dirs
+  end
 end
