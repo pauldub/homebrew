@@ -23,9 +23,9 @@ end
 
 def brew_cleanup
   if ARGV.named.empty?
-    HOMEBREW_CELLAR.children.each do |rack|
+    HOMEBREW_CELLAR.racks.each do |rack|
       begin
-        cleanup(rack.basename.to_s) if rack.directory?
+        cleanup(rack.basename.to_s)
       rescue FormulaUnavailableError => e
         opoo "Formula not found for #{e.name}"
       end
