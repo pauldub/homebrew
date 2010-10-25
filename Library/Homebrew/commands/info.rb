@@ -1,5 +1,22 @@
 require 'formula'
 
+def github_info name
+  formula_name = Formula.path(name).basename
+  user = 'mxcl'
+  branch = 'master'
+
+  if system "/usr/bin/which -s git"
+    gh_user=`git config --global github.user 2>/dev/null`.chomp
+    /^\*\s*(.*)/.match(`git --work-tree=#{HOMEBREW_REPOSITORY} branch 2>/dev/null`)
+    unless $1.nil? || $1.empty? || gh_user.empty?
+      branch = $1.chomp
+      user = gh_user
+    end
+  end
+
+  return "http://github.com/#{user}/homebrew/commits/#{branch}/Library/Formula/#{formula_name}"
+end
+
 def info f
   exec 'open', github_info(f.name) if ARGV.flag? '--github'
 
