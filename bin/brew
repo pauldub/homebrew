@@ -101,7 +101,8 @@ begin
     brew_link
 
   when 'unlink'
-    ARGV.kegs.each {|keg| puts "#{keg.unlink} links removed for #{keg}"}
+    require 'commands/unlink'
+    brew_unlink
 
   when 'remove', 'rm', 'uninstall'
     require 'commands/remove'
