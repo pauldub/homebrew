@@ -11,15 +11,6 @@ class MultipleVersionsInstalledError <RuntimeError
   end
 end
 
-class NoSuchKegError <RuntimeError
-  attr :name
-
-  def initialize name
-    @name = name
-    super "No such keg: #{HOMEBREW_CELLAR}/#{name}"
-  end
-end
-
 module HomebrewArgvExtension
   def named
     @named ||= reject{|arg| arg[0..0] == '-'}
@@ -39,6 +30,7 @@ module HomebrewArgvExtension
   def kegs
     require 'keg'
     require 'formula'
+
     @kegs ||= downcased_unique_named.collect do |name|
       d = HOMEBREW_CELLAR + Formula.resolve_alias(name)
       dirs = d.children.select{ |pn| pn.directory? } rescue []
