@@ -1,6 +1,7 @@
 require 'extend/pathname'
 require 'extend/ARGV'
 require 'extend/string'
+require 'cellar'
 require 'utils'
 
 ARGV.extend(HomebrewArgvExtension)
@@ -26,9 +27,9 @@ HOMEBREW_REPOSITORY = Pathname.new(HOMEBREW_BREW_FILE).realpath.dirname.parent #
 # Where we store built products; /usr/local/Cellar if it exists,
 # otherwise a Cellar relative to the Repository.
 if (HOMEBREW_PREFIX+'Cellar').exist?
-  HOMEBREW_CELLAR = HOMEBREW_PREFIX+'Cellar'
+  HOMEBREW_CELLAR = Cellar.new(HOMEBREW_PREFIX+'Cellar')
 else
-  HOMEBREW_CELLAR = HOMEBREW_REPOSITORY+'Cellar'
+  HOMEBREW_CELLAR = Cellar.new(HOMEBREW_REPOSITORY+'Cellar')
 end
 
 MACOS_FULL_VERSION = `/usr/bin/sw_vers -productVersion`.chomp
