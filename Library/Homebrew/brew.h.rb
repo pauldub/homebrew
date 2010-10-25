@@ -1,23 +1,6 @@
 FORMULA_META_FILES = %w[README README.md ChangeLog COPYING LICENSE LICENCE COPYRIGHT AUTHORS]
 PLEASE_REPORT_BUG = "#{Tty.white}Please report this bug at #{Tty.em}http://github.com/mxcl/homebrew/issues#{Tty.reset}"
 
-def github_info name
-  formula_name = Formula.path(name).basename
-  user = 'mxcl'
-  branch = 'master'
-
-  if system "/usr/bin/which -s git"
-    gh_user=`git config --global github.user 2>/dev/null`.chomp
-    /^\*\s*(.*)/.match(`git --work-tree=#{HOMEBREW_REPOSITORY} branch 2>/dev/null`)
-    unless $1.nil? || $1.empty? || gh_user.empty?
-      branch = $1.chomp
-      user = gh_user
-    end
-  end
-
-  return "http://github.com/#{user}/homebrew/commits/#{branch}/Library/Formula/#{formula_name}"
-end
-
 def issues_for_formula name
   # bit basic as depends on the issue at github having the exact name of the
   # formula in it. Which for stuff like objective-caml is unlikely. So we
