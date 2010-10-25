@@ -55,9 +55,14 @@ def macports_or_fink_installed?
   false
 end
 
+# For backwards compatibility; will be removed in Homebrew 0.9
 def outdated_brews
-  # For backwards compatibility; will be removed in Homebrew 0.9
   return HOMEBREW_CELLAR.outdated_brews
+end
+
+# For backwards compatibility; will be removed in Homebrew 0.9
+def prune
+  return HOMEBREW_PREFIX.prune
 end
 
 def search_brews text
