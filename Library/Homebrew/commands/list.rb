@@ -62,8 +62,7 @@ private
 end
 
 def brew_list_unbrewed
-  dirs = HOMEBREW_PREFIX.children.select { |pn| pn.directory? }.collect { |pn| pn.basename.to_s }
-  dirs -= ['Library', 'Cellar', '.git']
+  dirs = HOMEBREW_PREFIX.unbrewed_dirs
   Dir.chdir HOMEBREW_PREFIX
   exec 'find', *dirs + %w[-type f ( ! -iname .ds_store ! -iname brew )]
 end
