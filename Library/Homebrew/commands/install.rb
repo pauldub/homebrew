@@ -1,6 +1,7 @@
-require 'hardware'
-require 'formula'
 require 'set'
+require 'blacklist'
+require 'formula'
+require 'hardware'
 
 class FormulaInstaller
   @@attempted = Set.new

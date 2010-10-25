@@ -1,35 +1,6 @@
 FORMULA_META_FILES = %w[README README.md ChangeLog COPYING LICENSE LICENCE COPYRIGHT AUTHORS]
 PLEASE_REPORT_BUG = "#{Tty.white}Please report this bug at #{Tty.em}http://github.com/mxcl/homebrew/issues#{Tty.reset}"
 
-def check_for_blacklisted_formula names
-  return if ARGV.force?
-
-  names.each do |name|
-    case name
-    when 'tex', 'tex-live', 'texlive' then abort <<-EOS.undent
-      Installing TeX from source is weird and gross, requires a lot of patches,
-      and only builds 32-bit (and thus can't use Homebrew deps on Snow Leopard.)
-
-      We recommend using a MacTeX distribution:
-        http://www.tug.org/mactex/
-    EOS
-
-    when 'mercurial', 'hg' then abort <<-EOS.undent
-      Mercurial can be install thusly:
-        brew install pip && pip install mercurial
-    EOS
-
-    when 'setuptools' then abort <<-EOS.undent
-      When working with a Homebrew-built Python, distribute is preferred
-      over setuptools, and can be used as the prerequisite for pip.
-
-      Install distribute using:
-        brew install distribute
-    EOS
-    end
-  end
-end
-
 def github_info name
   formula_name = Formula.path(name).basename
   user = 'mxcl'
