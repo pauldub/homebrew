@@ -27,10 +27,17 @@ end
 
 class BuildError <ExecutionError
   attr :env
+  attr :formula_name
+  attr :error_line
 
   def initialize cmd, args = [], es = nil
     super
     @env = ENV.to_hash
+    unless @backtrace.nil?
+      @backtrace[1] =~ %r{Library/Formula/(.+)\.rb:(\d+)}
+      @formula_name = $1
+      @error_line = $2
+    end
   end
 end
 
