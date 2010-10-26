@@ -270,10 +270,7 @@ def dump_build_env env
     value = env[k]
     next unless value
     results = value
-    if File.exists? value and File.symlink? value
-      target = Pathname.new(value)
-      results += " => #{target.realpath}"
-    end
+    results += " => #{Pathname.new(value).realpath}" if File.exists? value and File.symlink? value
     puts "#{k}: #{results}"
   end
 
