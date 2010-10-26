@@ -268,14 +268,13 @@ def dump_build_env env
 
   %w[ CC CXX LD ].each do |k|
     value = env[k]
-    if value
-      results = value
-      if File.exists? value and File.symlink? value
-        target = Pathname.new(value)
-        results += " => #{target.realpath}"
-      end
-      puts "#{k}: #{results}"
+    next unless value
+    results = value
+    if File.exists? value and File.symlink? value
+      target = Pathname.new(value)
+      results += " => #{target.realpath}"
     end
+    puts "#{k}: #{results}"
   end
 
   %w[ CFLAGS CXXFLAGS CPPFLAGS LDFLAGS MACOSX_DEPLOYMENT_TARGET MAKEFLAGS PKG_CONFIG_PATH
