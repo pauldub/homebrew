@@ -1,8 +1,7 @@
 require 'extend/pathname'
 require 'extend/ARGV'
 require 'extend/string'
-require 'cellar'
-require 'prefix'
+require 'homebrew_paths'
 require 'utils'
 
 ARGV.extend(HomebrewArgvExtension)
