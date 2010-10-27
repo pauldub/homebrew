@@ -169,7 +169,8 @@ begin
     brew_test
 
   else
-    # Add example external commands to PATH before checking.
+    # Add external command locations to PATH
+    ENV['PATH'] += ":#{HOMEBREW_REPOSITORY}/Library/Homebrew/commands"
     ENV['PATH'] += ":#{HOMEBREW_REPOSITORY}/Library/Contributions/examples"
 
     # Check for an external shell command
