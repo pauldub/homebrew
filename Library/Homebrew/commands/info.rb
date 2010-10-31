@@ -65,7 +65,8 @@ def brew_info
         puts '---'
       end
     else
-      puts `ls #{HOMEBREW_CELLAR} | wc -l`.strip+" kegs, "+HOMEBREW_CELLAR.abv
+      puts "Installed: "+`ls #{HOMEBREW_CELLAR} | wc -l`.strip+" kegs, "+HOMEBREW_CELLAR.abv
+      puts "Cached: "+HOMEBREW_CACHE.abv
     end
   elsif ARGV[0][0..6] == 'http://' or ARGV[0][0..7] == 'https://' or ARGV[0][0..5] == 'ftp://'
     path = Pathname.new(ARGV.shift)
