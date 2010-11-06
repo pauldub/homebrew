@@ -258,6 +258,13 @@ Some external commands are shipped with Homebrew, and enabled by default.
     If set, Homebrew will not remove files from share/info, allowing them to
     be linked from the Cellar.
 
+  * HOMEBREW\_MASTER\_REPO, HOMEBREW\_MASTER\_BRANCH:
+    These default to "mxcl" and "master" respectively, and determine which
+    repository to pull from when doing `brew update`.
+
+    These can be set to an alternate repository on GitHub to force updates to
+    come from an alternate repository.
+
   * HOMEBREW\_SVN:
     When exporting from Subversion, Homebrew will use `HOMEBREW_SVN` if set,
     a Homebrew-built Subversion if installed, or the system-provided binary.

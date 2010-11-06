@@ -1,8 +1,11 @@
 class RefreshBrew
-  REPOSITORY_URL   = "http://github.com/mxcl/homebrew.git"
+  UPSTREAM_REPO    = ENV['HOMEBREW_MASTER_REPO']   || "mxcl"
+  UPSTREAM_BRANCH  = ENV['HOMEBREW_MASTER_BRANCH'] || "master"
+
+  REPOSITORY_URL   = "http://github.com/#{UPSTREAM_REPO}/homebrew.git"
   INIT_COMMAND     = "git init"
-  CHECKOUT_COMMAND = "git checkout -q master"
-  UPDATE_COMMAND   = "git pull #{REPOSITORY_URL} master"
+  CHECKOUT_COMMAND = "git checkout -q #{UPSTREAM_BRANCH}"
+  UPDATE_COMMAND   = "git pull #{REPOSITORY_URL} #{UPSTREAM_BRANCH}"
   REVISION_COMMAND = "git log -l -1 --pretty=format:%H 2> /dev/null"
   GIT_UP_TO_DATE   = "Already up-to-date."
 

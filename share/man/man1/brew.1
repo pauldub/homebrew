@@ -261,6 +261,13 @@ HOMEBREW_KEEP_INFO
 If set, Homebrew will not remove files from share/info, allowing them to be linked from the Cellar\.
 .
 .TP
+HOMEBREW_MASTER_REPO, HOMEBREW_MASTER_BRANCH
+These default to "mxcl" and "master" respectively, and determine which repository to pull from when doing \fBbrew update\fR\.
+.
+.IP
+These can be set to an alternate repository on GitHub to force updates to come from an alternate repository\.
+.
+.TP
 HOMEBREW_SVN
 When exporting from Subversion, Homebrew will use \fBHOMEBREW_SVN\fR if set, a Homebrew\-built Subversion if installed, or the system\-provided binary\.
 .
