@@ -7,16 +7,12 @@ class AvrBinutils <Formula
 
   def install
     ENV.append 'CPPFLAGS', "-I#{include}"
-
-    args = ["--prefix=#{prefix}",
-            "--disable-debug",
-            "--disable-dependency-tracking",
-            "--infodir=#{info}",
-            "--mandir=#{man}",
-            "--disable-werror",
-	    "--target=avr" ]
-
-    system "./configure", *args
+    system "./configure", "--disable-debug", "--disable-dependency-tracking",
+                          "--prefix=#{prefix}",
+                          "--infodir=#{info}",
+                          "--mandir=#{man}",
+                          "--disable-werror",
+                    	    "--target=avr"
     system "make"
     system "make install"
   end
