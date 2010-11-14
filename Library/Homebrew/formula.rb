@@ -342,7 +342,7 @@ class Formula
       else
         name = Formula.caniconical_name(name)
         # For names, map to the path and then require
-        require Formula.path name
+        require Formula.path(name)
         install_type = :from_name
       end
     end
